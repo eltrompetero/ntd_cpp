@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2CD59F3823972B9B00A3759E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CD59F3723972B9B00A3759E /* main.cpp */; };
+		2CD59F4B23976BA400A3759E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CD59F4A23976BA400A3759E /* main.cpp */; };
+		2CD59F4E23976BE700A3759E /* ntd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CD59F4C23976BE700A3759E /* ntd.cpp */; };
+		2CD59F5023984F0100A3759E /* ifile.csv in Sources */ = {isa = PBXBuildFile; fileRef = 2CD59F4F23984E9C00A3759E /* ifile.csv */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,7 +26,11 @@
 
 /* Begin PBXFileReference section */
 		2CD59F3423972B9B00A3759E /* ntd */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ntd; sourceTree = BUILT_PRODUCTS_DIR; };
-		2CD59F3723972B9B00A3759E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		2CD59F4A23976BA400A3759E /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		2CD59F4C23976BE700A3759E /* ntd.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ntd.cpp; sourceTree = "<group>"; };
+		2CD59F4D23976BE700A3759E /* ntd.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ntd.hpp; sourceTree = "<group>"; };
+		2CD59F4F23984E9C00A3759E /* ifile.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ifile.csv; sourceTree = "<group>"; };
+		2CD59F512398D30800A3759E /* ntd */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ntd; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,7 +47,11 @@
 		2CD59F2B23972B9B00A3759E = {
 			isa = PBXGroup;
 			children = (
-				2CD59F3623972B9B00A3759E /* ntd */,
+				2CD59F4F23984E9C00A3759E /* ifile.csv */,
+				2CD59F4C23976BE700A3759E /* ntd.cpp */,
+				2CD59F4D23976BE700A3759E /* ntd.hpp */,
+				2CD59F512398D30800A3759E /* ntd */,
+				2CD59F4A23976BA400A3759E /* main.cpp */,
 				2CD59F3523972B9B00A3759E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,14 +62,6 @@
 				2CD59F3423972B9B00A3759E /* ntd */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		2CD59F3623972B9B00A3759E /* ntd */ = {
-			isa = PBXGroup;
-			children = (
-				2CD59F3723972B9B00A3759E /* main.cpp */,
-			);
-			path = ntd;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,7 +121,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CD59F3823972B9B00A3759E /* main.cpp in Sources */,
+				2CD59F5023984F0100A3759E /* ifile.csv in Sources */,
+				2CD59F4E23976BE700A3759E /* ntd.cpp in Sources */,
+				2CD59F4B23976BA400A3759E /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,6 +243,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 53M3ZJ3D34;
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -249,6 +254,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 53M3ZJ3D34;
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
