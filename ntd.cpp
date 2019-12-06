@@ -191,9 +191,11 @@ void ConflictReportsTrajectory::grow(int n_steps, int record_every, double mx_ra
                 // spawn new branches
                 for (int j=0; j<r; ++j) {
                     stringStream << gb->label << j;
-                    growingBranches.push_back(Branch(stringStream.str(),
-                                                     int(pow(b,gb->label.size()+1) * factorrng(rd)),
-                                                     gb->len+gb->ancestralLen));
+                    nb = Branch(stringStream.str(),
+                                int(pow(b,gb->label.size()+1) * factorrng(rd)),
+                                gb->len+gb->ancestralLen);
+                    nb.grow();
+                    growingBranches.push_back(nb);
                     stringStream.str("");
                     gb = &(growingBranches[randix]);
                 }

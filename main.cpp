@@ -64,9 +64,28 @@ bool read(std::string fname, std::vector<int> &t) {
 // input file name
 // output files are the input file name with ".s" and ".r" suffixes
 int main(int argc, const char * argv[]) {
+    // parse command line args
+    std::string instring;
     // read in input file name
     std::string ifile(argv[1]);
-    // read in output file name
+    // read in r
+    instring = std::string (argv[2]);
+    int r;
+    std::sscanf(instring.data(), "%d", &r);
+    // read in b
+    instring = std::string (argv[3]);
+    double b;
+    std::sscanf(instring.data(), "%lf", &b);
+    // read in theta
+    instring = std::string (argv[4]);
+    double theta;
+    std::sscanf(instring.data(), "%lf", &theta);
+    // read in gamma
+    instring = std::string (argv[5]);
+    double gmma;
+    std::sscanf(instring.data(), "%lf", &gmma);
+    
+    // set output file name
     std::string osfname = ifile+".s";
     std::string orfname = ifile+".r";
     std::ofstream sfile (osfname.data());
@@ -74,7 +93,7 @@ int main(int argc, const char * argv[]) {
     std::vector<int> t;  // to read in sim durations
     
     read(ifile, t);
-    ConflictReportsTrajectory crt(3, 12.98, .3, -.7);
+    ConflictReportsTrajectory crt(r, b, theta, gmma);
     
     for (std::vector<int>::iterator it=t.begin(); it!=t.end(); ++it) {
         std::cout << "t" << *it << "\n";
