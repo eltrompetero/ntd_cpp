@@ -143,15 +143,20 @@ ConflictReportsTrajectory::ConflictReportsTrajectory() {};
 ConflictReportsTrajectory::ConflictReportsTrajectory(int newr,
                                                      double newb,
                                                      double newtheta,
-                                                     double newgamma,
+                                                     double newgammas,
+                                                     double newgammaf,
                                                      int rng_seed) {
     assert (newr>1);
     assert (newb>1);
+    assert (newtheta>=0.0);
+    assert (newgammas>=-1.0);
+    assert (newgammaf>=-1.0);
     
     r = newr;
     b = newb;
     theta = newtheta;
-    gamma = newgamma;
+    gammas = newgammas;
+    gammaf = newgammaf;
     rngSeed = rng_seed;
 };
 
@@ -159,12 +164,13 @@ void ConflictReportsTrajectory::grow(int n_steps, int record_every, double mx_ra
     assert (n_steps>0);
     assert (record_every>=1);
     cumS = std::vector<int> (n_steps, 0);
+    cumF = std::vector<int> (n_steps, 0);
     if (mx_rand_coeff==-1) {
         mx_rand_coeff = b;
     }
     assert (mx_rand_coeff>0);
     
-    int n, i, randix;
+    int randix;
     int counter = 0;
     std::uniform_real_distribution<double> factorrng(1/mx_rand_coeff, mx_rand_coeff);
     std::uniform_int_distribution<int> randixrng;
@@ -174,6 +180,7 @@ void ConflictReportsTrajectory::grow(int n_steps, int record_every, double mx_ra
     
     this->clear();
     
+    // create first generation emanating from center
     for (int i=0; i<r; ++i) {
         stringStream << i;
         growingBranches.push_back(Branch(stringStream.str(), b));
@@ -181,38 +188,34 @@ void ConflictReportsTrajectory::grow(int n_steps, int record_every, double mx_ra
     }
     
     while (counter<n_steps) {
-        n = growingBranches.size();
-        i = 0;
-        while (i<n) {
-            randixrng = std::uniform_int_distribution<int> (0, n-1);
-            randix = randixrng(rd);
-            gb = &(growingBranches[randix]);
-            if (!gb->grow()) {
-                // spawn new branches
-                for (int j=0; j<r; ++j) {
-                    stringStream << gb->label << j;
-                    nb = Branch(stringStream.str(),
-                                int(pow(b,gb->label.size()+1) * factorrng(rd)),
-                                gb->len+gb->ancestralLen);
-                    nb.grow();
-                    growingBranches.push_back(nb);
-                    stringStream.str("");
-                    gb = &(growingBranches[randix]);
-                }
-                deadBranches.push_back(growingBranches[randix]);
-                growingBranches.erase(growingBranches.begin()+randix);
-                n--;
-                i--;
+        randixrng = std::uniform_int_distribution<int> (0, int(growingBranches.size())-1);
+        randix = randixrng(rd);
+        gb = &(growingBranches[randix]);
+        // if branch fails to grow, then spawn children and try again
+        if (!gb->grow()) {
+            // spawn new branches
+            for (int j=0; j<r; ++j) {
+                stringStream << gb->label << j;
+                nb = Branch(stringStream.str(),
+                            int(pow(b,gb->label.size()+1) * factorrng(rd)),
+                            gb->len+gb->ancestralLen);
+                nb.grow();
+                growingBranches.push_back(nb);
+                stringStream.str("");
+                gb = &(growingBranches[randix]);
             }
+            deadBranches.push_back(growingBranches[randix]);
+            growingBranches.erase(growingBranches.begin()+randix);
+        } else {
             for (int j=counter; j<n_steps; ++j) {
-                cumS[j] += int(pow(j-counter, 1+gamma) * pow(counter+1, -theta));
+                cumS[j] += int(pow(j-counter, 1+gammas) * pow(counter+1, -theta));
                 cumS[j] += 1;
+                cumF[j] += int(pow(j-counter, 1+gammaf) * pow(counter+1, -theta));
             }
             if ((counter%record_every)==0) {
                 radius.push_back(max_len(growingBranches));
             }//end if
             counter++;
-            i++;
         }//end while
     }//end while
 };//end grow

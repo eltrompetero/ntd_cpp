@@ -41,6 +41,7 @@ public:
     std::vector<Branch> growingBranches;
     std::vector<Branch> deadBranches;
     std::vector<int> cumS;
+    std::vector<int> cumF;
     std::vector<int> radius;
     std::mt19937 rd;
     
@@ -53,10 +54,10 @@ public:
 
 class ConflictReportsTrajectory : public NTD {
 public:
-    double theta, gamma;
+    double theta, gammas, gammaf;
     
     ConflictReportsTrajectory();
-    ConflictReportsTrajectory(int, double, double, double, int=-1);
+    ConflictReportsTrajectory(int, double, double, double, double, int=-1);
     void grow(int, int=10, double=-1.0);
     void sample(int);
 };

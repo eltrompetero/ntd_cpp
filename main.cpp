@@ -62,7 +62,7 @@ bool read(std::string fname, std::vector<int> &t) {
 
 // command line args are
 // input file name
-// output files are the input file name with ".s" and ".r" suffixes
+// output files are the input file name with ".s", ".r", and ".f" suffixes
 int main(int argc, const char * argv[]) {
     // parse command line args
     std::string instring;
@@ -82,25 +82,33 @@ int main(int argc, const char * argv[]) {
     std::sscanf(instring.data(), "%lf", &theta);
     // read in gamma
     instring = std::string (argv[5]);
-    double gmma;
-    std::sscanf(instring.data(), "%lf", &gmma);
+    double gmmas;
+    std::sscanf(instring.data(), "%lf", &gmmas);
+    // read in gamma_f
+    instring = std::string (argv[6]);
+    double gmmaf;
+    std::sscanf(instring.data(), "%lf", &gmmaf);
     
     // set output file name
     std::string osfname = ifile+".s";
+    std::string offname = ifile+".f";
     std::string orfname = ifile+".r";
     std::ofstream sfile (osfname.data());
+    std::ofstream ffile (offname.data());
     std::ofstream rfile (orfname.data());
     std::vector<int> t;  // to read in sim durations
     
     read(ifile, t);
-    ConflictReportsTrajectory crt(r, b, theta, gmma);
+    ConflictReportsTrajectory crt(r, b, theta, gmmas, gmmaf);
     
     for (std::vector<int>::iterator it=t.begin(); it!=t.end(); ++it) {
         std::cout << "t" << *it << "\n";
         crt.grow(*it);
         write(sfile, crt.cumS);
+        write(ffile, crt.cumF);
         write(rfile, crt.radius);
     }
     sfile.close();
+    ffile.close();
     rfile.close();
 }//end main
